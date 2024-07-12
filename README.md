@@ -25,24 +25,36 @@ In this part, I set up the network and established a multi-AZ RDS database with 
 ### VPC Setup
 To start, I used the provided YAML file and used CloudFormation to set up the networking in the us-east-1 and us-west-2 regions. The setup included two private and two public subnets across two availability zones in two different regions. It was very nice not to have to manually set these up. Infrastructure as code is awesome (so long as it's set up properly).
 
+
 [VPC Setup - Primary VPC](screenshots/primary_Vpc.png)
+
 [VPC Setup - Secondary VPC](screenshots/secondary_Vpc.png)
+
 [Primary Subnet Routing](screenshots/primary_subnet_routing.png)
+
 [Secondary Subnet Routing](screenshots/secondary_subnet_routing.png)
+
 
 ### Database Setup
 The requirement for the database was to create a multi-AZ database that would failover into another availability zone and a read replica in another region in case the first region experienced an outage.
 
 The first step to create a multi-AZ database is to create subnet groupings. This ensures that your database will failover to the standby in case of outages in the first AZ.
 
+
 [Primary Subnet Setup](screenshots/primaryDB_subnetgroup.png)
+
 [Secondary Subnet Setup](screenshots/secondaryDB_subnetgroup.png)
 
 The database setup was fairly straightforward once the subnets were set up. It took quite a while for the database to become available. It first had to spin up the instance, then it had to modify the DB to be multi-AZ.
+
+
 [Primary Database Setup](screenshots/primaryDB_config.png)
 
 In order to create the replica, you just needed to select the primary database and click actions -> create read replica. This was straightforward as well.
+
+
 [Read Replica Database Setup](screenshots/secondaryDB_config.png)
+
 
 ### Demonstrating Normal Usage
 The requirement here was just to create a table on the database and insert some data. The tricky part was connecting to the database. I had to set up a jump server (EC2), SSH into that server, then access the database from there. The biggest challenge was just getting the MySQL command. I eventually found some help on Stack Overflow that said to install MariaDB using `sudo dnf install mariadb105`. From there, logging into the database, creating the table, and inserting data was a breeze.
@@ -52,7 +64,9 @@ You can see the log here: [logs/log_primary.txt](logs/log_primary.txt)
 ### Monitoring the Database
 Udacity required me to monitor the connections to the databases when I connected to them. There's nothing really exciting here. CloudWatch showed that my connections went up then down. It's something to watch out for and possibly create alerts for depending on your database needs.
 
+
 [Primary Connections](screenshots/monitoring_connections.png)
+
 [Replica Connections](screenshots/monitoring_replication.png)
 
 ## Part 2 - Failover and Recovery
