@@ -101,7 +101,7 @@ You can see the log here [logs/log_rr_after_promotion.txt](logs/log_rr_after_pro
 Before going on to the next step, I made sure to delete the database instances in both regions.  I also terminated the EC2 jump servers I used.  The first time I attempted the project I did not do this and had a budged overrun ::facepalm::
 
 ## Part 3 - Web Resiliancy
-This part of the project had me create a static webpage that was hosted in a versioned S3 bucket.  The purpose was to demonstrate how you could roll back changes in case you accidentally deleted items or modified items.  The project itself was very straightforward. 
+This part of the project had me create a static webpage that was hosted in a versioned S3 bucket.  The purpose was to demonstrate how you could roll back changes in case you accidentally deleted items or modified items.  The project itself was very straightforward. The biggest thing to remember when looking at objects in a versioned object is that there is a toggle that shows you the versions.  When reverting, make sure to use that toggle.
 
 ### Initial Setup
 The initial setup for this had me create a versioned S3 bucket and load the files from the udacity github repo for the project.  
