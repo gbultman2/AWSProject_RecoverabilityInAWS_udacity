@@ -34,6 +34,7 @@ To start, I used the provided YAML file and used CloudFormation to set up the ne
 The requirement for the database was to create a multi-AZ database that would failover into another availability zone and a read replica in another region in case the first region experienced an outage.
 
 The first step to create a multi-AZ database is to create subnet groupings. This ensures that your database will failover to the standby in case of outages in the first AZ.
+
 ![Primary Subnet Setup](screenshots/primarydb_subnetgroup.png)
 ![Secondary Subnet Setup](screenshots/secondarydb_subnetgroup.png)
 
@@ -73,9 +74,8 @@ You can see the log here [logs/log_rr_before_promotion.txt](logs/log_rr_before_p
 ### Failover to the New Region
 In case the entire us-east-1 region goes down, we have this read replica we can promote.  It's pretty simple, but it is a manual task in this course.  I believe you could do some automation here but that was outside the scope of the course.  All that was done here was to click the action "promote" in the console.  It took a little bit, but this db became writable.  
 
-**Read Replica Configuration Prior to Promotion:**
 ![Read Replica Configuration Prior to Promotion](screenshots/rr_before_promotion)
-**Read Replica Configuration Prior to Promotion:**
+
 ![Read Replica Configuration After Promotion](screenshots/rr_after_promotion.png)
 
 ### Demonstrating Normal Usage
