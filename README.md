@@ -100,3 +100,34 @@ You can see the log here [logs/log_rr_after_promotion.txt](logs/log_rr_after_pro
 ### Finishing Up
 Before going on to the next step, I made sure to delete the database instances in both regions.  I also terminated the EC2 jump servers I used.  The first time I attempted the project I did not do this and had a budged overrun ::facepalm::
 
+## Part 3 - Web Resiliancy
+This part of the project had me create a static webpage that was hosted in a versioned S3 bucket.  The purpose was to demonstrate how you could roll back changes in case you accidentally deleted items or modified items.  The project itself was very straightforward. 
+
+### Initial Setup
+The initial setup for this had me create a versioned S3 bucket and load the files from the udacity github repo for the project.  
+
+Here's what the first webpage looks like: 
+
+![index_original.html](screenshots/s3_original.png)
+
+I modified the webpage to use a different season/picture. 
+
+![index_spring.html](screenshots/s3_spring.png)
+
+Then I reverted it back by deleting the newest version of index.html
+
+![index_spring_revert.html](screenshots/s3_season_revert.png)
+
+The next step was to delete the winter picture file ::ohmy::
+
+It shows a delete marker on the version history and the background went blank.
+
+![Delete Marker](screenshots/s3_delete_marker.png)
+
+![index_deletion.html](screenshots/s3_deletion.png)
+
+The final step was to delete the delete marker and the webpage returned to the original state.
+
+![Delete Revert](screenshots/s3_delete_revert.png)
+
+
