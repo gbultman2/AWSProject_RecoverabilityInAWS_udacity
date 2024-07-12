@@ -1,0 +1,103 @@
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+[ec2-user@ip-10-1-10-11 ~]$ sudo dnf update -y
+sudo dnf install mariadb105
+Last metadata expiration check: 0:14:17 ago on Fri Jul 12 13:40:55 2024.
+Dependencies resolved.
+Nothing to do.
+Complete!
+Last metadata expiration check: 0:14:18 ago on Fri Jul 12 13:40:55 2024.
+Dependencies resolved.
+=====================================================================================================================================================================
+ Package                                         Architecture                Version                                          Repository                        Size
+=====================================================================================================================================================================
+Installing:
+ mariadb105                                      x86_64                      3:10.5.23-1.amzn2023.0.1                         amazonlinux                      1.6 M
+Installing dependencies:
+ mariadb-connector-c                             x86_64                      3.1.13-1.amzn2023.0.3                            amazonlinux                      196 k
+ mariadb-connector-c-config                      noarch                      3.1.13-1.amzn2023.0.3                            amazonlinux                      9.2 k
+ mariadb105-common                               x86_64                      3:10.5.23-1.amzn2023.0.1                         amazonlinux                       30 k
+ perl-Sys-Hostname                               x86_64                      1.23-477.amzn2023.0.6                            amazonlinux                       18 k
+
+Transaction Summary
+=====================================================================================================================================================================
+Install  5 Packages
+
+Total download size: 1.8 M
+Installed size: 19 M
+Is this ok [y/N]: y
+Downloading Packages:
+(1/5): mariadb-connector-c-config-3.1.13-1.amzn2023.0.3.noarch.rpm                                                                   146 kB/s | 9.2 kB     00:00    
+(2/5): mariadb-connector-c-3.1.13-1.amzn2023.0.3.x86_64.rpm                                                                          2.3 MB/s | 196 kB     00:00    
+(3/5): mariadb105-common-10.5.23-1.amzn2023.0.1.x86_64.rpm                                                                           1.4 MB/s |  30 kB     00:00    
+(4/5): perl-Sys-Hostname-1.23-477.amzn2023.0.6.x86_64.rpm                                                                            892 kB/s |  18 kB     00:00    
+(5/5): mariadb105-10.5.23-1.amzn2023.0.1.x86_64.rpm                                                                                  8.6 MB/s | 1.6 MB     00:00    
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                7.6 MB/s | 1.8 MB     00:00     
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                             1/1 
+  Installing       : mariadb-connector-c-config-3.1.13-1.amzn2023.0.3.noarch                                                                                     1/5 
+  Installing       : mariadb-connector-c-3.1.13-1.amzn2023.0.3.x86_64                                                                                            2/5 
+  Installing       : mariadb105-common-3:10.5.23-1.amzn2023.0.1.x86_64                                                                                           3/5 
+  Installing       : perl-Sys-Hostname-1.23-477.amzn2023.0.6.x86_64                                                                                              4/5 
+  Installing       : mariadb105-3:10.5.23-1.amzn2023.0.1.x86_64                                                                                                  5/5 
+  Running scriptlet: mariadb105-3:10.5.23-1.amzn2023.0.1.x86_64                                                                                                  5/5 
+  Verifying        : mariadb-connector-c-3.1.13-1.amzn2023.0.3.x86_64                                                                                            1/5 
+  Verifying        : mariadb-connector-c-config-3.1.13-1.amzn2023.0.3.noarch                                                                                     2/5 
+  Verifying        : mariadb105-3:10.5.23-1.amzn2023.0.1.x86_64                                                                                                  3/5 
+  Verifying        : mariadb105-common-3:10.5.23-1.amzn2023.0.1.x86_64                                                                                           4/5 
+  Verifying        : perl-Sys-Hostname-1.23-477.amzn2023.0.6.x86_64                                                                                              5/5 
+
+Installed:
+  mariadb-connector-c-3.1.13-1.amzn2023.0.3.x86_64       mariadb-connector-c-config-3.1.13-1.amzn2023.0.3.noarch      mariadb105-3:10.5.23-1.amzn2023.0.1.x86_64     
+  mariadb105-common-3:10.5.23-1.amzn2023.0.1.x86_64      perl-Sys-Hostname-1.23-477.amzn2023.0.6.x86_64              
+
+Complete!
+[ec2-user@ip-10-1-10-11 ~]$ mysql -h (redacted) -P 3306 -u admin -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 37
+Server version: 8.0.35 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> CREATE TABLE test_table (id INT, value_col VARCHAR(100));
+ERROR 1046 (3D000): No database selected
+MySQL [(none)]> USE udacity
+Database changed
+MySQL [udacity]> CREATE TABLE test_table (id INT, value_col VARCHAR(100));
+Query OK, 0 rows affected (0.056 sec)
+
+MySQL [udacity]> INSERT INTO test_table (id, value_col) VALUES(1, 'test text 1')
+    -> ;
+Query OK, 1 row affected (0.015 sec)
+
+MySQL [udacity]> select * from test_table
+    -> ;
++------+-------------+
+| id   | value_col   |
++------+-------------+
+|    1 | test text 1 |
++------+-------------+
+1 row in set (0.001 sec)
+
+MySQL [udacity]> exit
+Bye
+[ec2-user@ip-10-1-10-11 ~]$ exit
+logout
+Connection to ec2-54-198-122-45.compute-1.amazonaws.com closed.
+

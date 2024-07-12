@@ -1,0 +1,42 @@
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+Last login: Fri Jul 12 14:20:56 2024 from 71.130.234.17
+[ec2-user@ip-10-2-10-216 ~]$ mysql -h (redacted) -P 3306 -u admin -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.35 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> use udacity
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [udacity]> INSERT INTO test_table (id, value_col) VALUES (3, 'text after promotion this time save the log');
+Query OK, 1 row affected (0.005 sec)
+
+MySQL [udacity]> select * from test_table
+    -> ;
++------+---------------------------------------------+
+| id   | value_col                                   |
++------+---------------------------------------------+
+|    1 | test text 1                                 |
+|    2 | test text rr after promotion                |
+|    3 | text after promotion this time save the log |
++------+---------------------------------------------+
+3 rows in set (0.001 sec)
+
+MySQL [udacity]> 
+

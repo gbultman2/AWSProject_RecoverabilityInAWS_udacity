@@ -1,0 +1,11 @@
+We set this RDS database to be a multi-az instance with read/write in the us-east-1 region and read replica in us-west-2. 
+
+Each region has two separate subnets located in two separate availability zones.  We will assume that the outages in 1-4 occur in the primary us-east-1 region and its respective az(s).  If failures occur in the replica region, the RTO and RPO are 0 since the primary db is not affected. 
+
+1.  Minimum Recovery Time Objective for a single AZ outage.  The minimum RTO for a single AZ outage with our configuration is about 1-2 minutes. This is because we have automatic failover to the second availability zone in the region.
+
+2.  Minimum Recovery Time Objective for a single region outage.  The RTO is different in this case because we only have a read replica available in the non-affected region.  We need to manually promote the replica.  You need to have alerts set up to notify staff, proper documentation on what to do, and prperly trained staff.  The minimum amount of time I'd assign to this task is about one hour for a small organization.
+
+3.  Minimum Recovery Point Objective for a single az outage, the minimum RPO for a single AZ outage is 0 since we have synchronous replication.
+
+4.  The minimum Recovery Point Objective for a single region outage.  Since we have a cross region read-replica set up, the RPO will be "typically under 1 second."  That's how fast the replication is occurring.
